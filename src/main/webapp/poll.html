@@ -18,10 +18,12 @@
     <link rel="stylesheet" href="./lib/future.css">
 </head>
 <body>
-<button type="button" onclick="test();">测试springmvc启动情况</button>
-<button type="button" onclick="error();">测试springmvc全局异常捕捉</button>
-<button type="button" onclick="javascript:location.href='./poll.html';">测试长连接</button>
-<div>最简单springmvc模版请检出c7443，完整springmvc模版请检出c2848</div>
+<button type="button" onclick="test();">原生长连接</button>
+<button type="button" onclick="test10();">测试原生长连接</button>
+<button type="button" onclick="test1();">创建结合spring长连接</button>
+<iframe src="" style="display:none" id="msgIframe"></iframe>
+<button type="button" onclick="test11();">测试spring长连接</button>
+<div></div>
 </body>
 <script src="./lib/jQuery/jquery-2.2.3.min.js"></script>
 <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
@@ -34,17 +36,40 @@
 <script>
     function test(){
         bs.ajax({
-            url:"/api/index/test",
+            async:true,
+            type:"GET",
+            url:"/asyServlet.do?action=get&uid=wlt",
             success:function (result) {
                 $("div").html(result);
             }
         });
     }
-    function error(){
+    function test10(){
         bs.ajax({
-            url:"/api/index/error",
+            async:true,
+            type:"POST",
+            url:"/asyServlet.do",
+            data:{msg:"好吧，我错了",action:"set"},
             success:function (result) {
-                $("div").html(result.code+result.msg);
+                $("div").html(result);
+            }
+        });
+    }
+    function test1(){
+        bs.ajax({
+            async:true,
+            url:"/api/asynServlet/connect",
+            data:{uid:"wlt"},
+            success:function (result) {
+                $("div").html(result);
+            }
+        });
+//        $("#msgIframe").attr("src",bs.apiRoot()+"/api/asynServlet/connect?uid=wlt");
+    }
+    function test11(){
+        bs.ajax({
+            url:"/api/asynServlet/testSpringPoll",
+            success:function (result) {
             }
         });
     }

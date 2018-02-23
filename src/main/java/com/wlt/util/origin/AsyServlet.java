@@ -1,4 +1,4 @@
-package com.wlt.util;
+package com.wlt.util.origin;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;  
@@ -13,15 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;  
 import java.util.concurrent.ConcurrentHashMap;  
   
-/** 
- * @author <a href="mailto:liuchangqing@youku.com">liuchangqing</a> 
- * @date 2017/8/2. 
- */  
-@WebServlet(name = "asyServlet",urlPatterns = "/asyServlet.do",asyncSupported = true)  
-public class AsyServlet extends HttpServlet{  
+@WebServlet(name = "asyServlet",urlPatterns = "/asyServlet.do",asyncSupported = true)
+public class AsyServlet extends HttpServlet{
     //存储请求的所有客户端
-    private static final Map<String,GetClient> clients = new ConcurrentHashMap<String,GetClient>();  
-  
+    private static final Map<String,GetClient> clients = new ConcurrentHashMap<String,GetClient>();
+
     static {
         //启动一个线程，扫描，关闭所有超时的连接
         new Timer().schedule(new TimerTask() {
@@ -41,22 +37,26 @@ public class AsyServlet extends HttpServlet{
             }
         }, 10, 5000);
     }
-  
-    @Override  
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {  
+
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        doGet(req,resp);
+//    }
+        @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         //拉数据
         if("get".equals(action)){
-            final AsyncContext asyncContext = req.startAsync();  
-            asyncContext.setTimeout(0L);  
-            String uid = req.getParameter("uid");  
+            final AsyncContext asyncContext = req.startAsync();
+            asyncContext.setTimeout(0L);
+            String uid = req.getParameter("uid");
             clients.put(uid,new GetClient(asyncContext,uid));
         //设置数据
         }else if("set".equals(action)){
             String msg = req.getParameter("msg");
-            sendMsg(msg);  
-            resp.getWriter().print("set success");  
-        }  
+            sendMsg(msg);
+            resp.getWriter().print("set success");
+        }
     }
 
     /**

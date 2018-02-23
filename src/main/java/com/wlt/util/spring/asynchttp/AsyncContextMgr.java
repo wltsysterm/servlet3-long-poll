@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 长轮询上下文管理类
  */
 public class AsyncContextMgr {
-    private static Map<String,AsyncContext> respMap = new HashMap<>();
+    private static Map<String,AsyncContext> respMap = new ConcurrentHashMap<>();
 
     public static void add(String key,AsyncContext ctx){
         respMap.put(key, ctx);

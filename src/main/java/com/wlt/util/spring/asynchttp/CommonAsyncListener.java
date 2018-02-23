@@ -23,6 +23,7 @@ public class CommonAsyncListener implements AsyncListener{
 	public void onComplete(AsyncEvent event) throws IOException {
 		logger.info("删除上下文,key={}",waitKey);
 		AsyncContextMgr.remove(waitKey);
+		logger.info("剩余监听：{}",AsyncContextMgr.showList());
 	}
 
 	@Override

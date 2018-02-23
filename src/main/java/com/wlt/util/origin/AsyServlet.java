@@ -102,7 +102,7 @@ class GetClient{
             HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();  
             PrintWriter writer = response.getWriter();  
             response.setHeader("Content-type", "text/html;charset=UTF-8");  
-            writer.println("<script>alert('"+format.format(new Date()) + ",receive:" + content + "')</script>");
+            writer.println("<script>window.parent.doalert('"+format.format(new Date()) + ",receive:" + content + "')</script>");
             writer.flush();  
         } catch (Exception se) {  
         }  

@@ -38,10 +38,10 @@ public class AsyServlet extends HttpServlet{
         }, 10, 5000);
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        doGet(req,resp);
-//    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
         @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -102,7 +102,7 @@ class GetClient{
             HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();  
             PrintWriter writer = response.getWriter();  
             response.setHeader("Content-type", "text/html;charset=UTF-8");  
-            writer.println(format.format(new Date()) + ",receive:" + content + "<br/>");  
+            writer.println("<script>alert('"+format.format(new Date()) + ",receive:" + content + "')</script>");
             writer.flush();  
         } catch (Exception se) {  
         }  

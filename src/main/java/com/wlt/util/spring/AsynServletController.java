@@ -51,7 +51,7 @@ public class AsynServletController {
 	}
 	@ResponseBody
 	@RequestMapping("/testSpringPoll")
-	public MsgResult testSpringPoll(tmpObj content) throws Exception {
+	public MsgResult testSpringPoll(@RequestBody tmpObj content) throws Exception {
 		logger.info("当前长轮询监听={}", AsyncContextMgr.showList());
 		for (String key:AsyncContextMgr.showList()) {
 			AsyncContext ctx = AsyncContextMgr.get(key);

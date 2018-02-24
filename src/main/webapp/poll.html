@@ -69,12 +69,14 @@
         $("iframe").attr({src:"http://localhost:8080/api/asynServlet/connect?uid=wlt"});
     }
     function test11(){
-        bs.ajax({
+        $.ajax({
             url:"/api/asynServlet/testSpringPoll",
             contentType:"application/json;charset=utf-8",
+            dataType:"JSON",
+            type:"POST",
             data:JSON.stringify({name:"测试人员",age:1111}),
             success:function (result) {
-                alert(result);
+                alert(JSON.stringify(result));
             }
         });
     }

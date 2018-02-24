@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @WebServlet(name = "asyServlet",urlPatterns = "/asyServlet.do",asyncSupported = true)
 public class AsyServlet extends HttpServlet{
     //存储请求的所有客户端
-    private static final Map<String,GetClient> clients = new ConcurrentHashMap<String,GetClient>();
+    public static final Map<String,GetClient> clients = new ConcurrentHashMap<String,GetClient>();
 
     static {
         //启动一个线程，扫描，关闭所有超时的连接
@@ -73,38 +73,3 @@ public class AsyServlet extends HttpServlet{
         }  
     }  
 }  
-  
-class GetClient{  
-  
-    public AsyncContext asyncContext;  
-    public String uid;  
-    public long time;  
-  
-    public GetClient(AsyncContext asyncContext, String uid) {  
-        this.asyncContext = asyncContext;  
-        this.uid = uid;  
-        this.time = System.currentTimeMillis();  
-    }  
-  
-    //关闭连接  
-    public void complete() {  
-        response("connect end");  
-        asyncContext.complete();  
-    }  
-  
-    public static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-  
-    //响应  
-    public void response(String message) {  
-        Map<String, Object> content = new HashMap<String, Object>();  
-        content.put("messages", message);  
-        try {  
-            HttpServletResponse response = (HttpServletResponse) asyncContext.getResponse();  
-            PrintWriter writer = response.getWriter();  
-            response.setHeader("Content-type", "text/html;charset=UTF-8");  
-            writer.println("<script>window.parent.doalert('"+format.format(new Date()) + ",receive:" + content + "')</script>");
-            writer.flush();  
-        } catch (Exception se) {  
-        }  
-    }  
-} 

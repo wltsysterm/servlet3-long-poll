@@ -61,8 +61,9 @@ public class AsynServletController {
 					HttpServletResponse response = (HttpServletResponse) ctx.getResponse();
 					PrintWriter writer = response.getWriter();
 					response.setHeader("Content-type", "text/html;charset=UTF-8");
-					writer.println("<script>window.parent.doalert('"+format.format(new Date()) + ",receive:姓名=" + content.getName()+";年龄="+ content.getAge() + "')</script>");
+					writer.println("<script>window.parent.doalert('"+format.format(new Date()) + "【一次性长轮询】,receive:姓名=" + content.getName()+";年龄="+ content.getAge() + "')</script>");
 					writer.flush();
+					ctx.complete();
 				} catch (IOException e) {
 					logger.warn("通知异常", e);
 					ctx.complete();
